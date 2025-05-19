@@ -26,7 +26,7 @@ const LoginScreen: React.FC = () => {
       fullName: '山田 太郎',
       phoneNumber: '09012345678'
     });
-    navigate('/');
+    navigate('/calendar');
   };
 
   return (
@@ -70,11 +70,13 @@ const LoginScreen: React.FC = () => {
         </Button>
 
         <div className="text-center space-y-2">
-          <Link to="/signup" className="text-sm text-blue-600 hover:text-blue-800">
-            新規登録はこちら
-          </Link>
           <div>
-            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
+            <Link to="/signup" className="block text-sm text-blue-600 hover:text-blue-800">
+              新規登録はこちら
+            </Link>
+          </div>
+          <div>
+            <Link to="/forgot-password" className="block text-sm text-blue-600 hover:text-blue-800">
               パスワードをお忘れですか？
             </Link>
           </div>
