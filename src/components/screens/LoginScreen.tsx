@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useReservation } from '../../context/ReservationContext';
 import Button from '../ui/Button';
 
@@ -70,13 +70,13 @@ const LoginScreen: React.FC = () => {
         </Button>
 
         <div className="text-center space-y-2">
-          <a href="/signup" className="text-sm text-blue-600 hover:text-blue-800">
+          <Link to="/signup" className="text-sm text-blue-600 hover:text-blue-800">
             新規登録はこちら
-          </a>
+          </Link>
           <div>
-            <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
+            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
               パスワードをお忘れですか？
-            </a>
+            </Link>
           </div>
         </div>
       </form>
