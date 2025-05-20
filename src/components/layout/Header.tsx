@@ -20,43 +20,48 @@ const Header: React.FC = () => {
   };
   
   return (
-    <header className="bg-blue-600 py-3 px-4 w-full flex justify-between items-center">
-      <div className="text-white font-bold text-xl">
-        病院予約システム
-      </div>
-      <div className="flex space-x-2">
-        {user.isAuthenticated && (
-          <>
+    <header className="bg-[#4169E1] py-4 px-6">
+      <div className="container mx-auto flex justify-between items-center">
+        <div 
+          className="text-white font-bold text-xl cursor-pointer"
+          onClick={() => navigate(user.isAdmin ? '/admin' : '/')}
+        >
+          {user.isAdmin ? 'イークリニック予約管理システム' : 'イークリニック予約システム'}
+        </div>
+        <div className="flex space-x-4">
+          {user.isAuthenticated && !user.isAdmin && (
+            <>
+              <button
+                onClick={handleProfile}
+                className="text-white hover:text-blue-100 transition-colors"
+              >
+                登録情報
+              </button>
+              <button
+                onClick={handleMyReservations}
+                className="text-white hover:text-blue-100 transition-colors"
+              >
+                マイ予約
+              </button>
+            </>
+          )}
+          
+          {user.isAuthenticated ? (
             <button
-              onClick={handleProfile}
-              className="bg-blue-700 hover:bg-blue-800 text-white py-1 px-4 rounded-md text-sm transition-colors"
+              onClick={handleLogout}
+              className="text-white hover:text-blue-100 transition-colors"
             >
-              登録情報
+              ログアウト
             </button>
+          ) : (
             <button
-              onClick={handleMyReservations}
-              className="bg-blue-700 hover:bg-blue-800 text-white py-1 px-4 rounded-md text-sm transition-colors"
+              onClick={() => navigate('/login')}
+              className="text-white hover:text-blue-100 transition-colors"
             >
-              マイ予約
+              ログイン
             </button>
-          </>
-        )}
-        
-        {user.isAuthenticated ? (
-          <button
-            onClick={handleLogout}
-            className="bg-blue-700 hover:bg-blue-800 text-white py-1 px-4 rounded-md text-sm transition-colors"
-          >
-            ログアウト
-          </button>
-        ) : (
-          <button
-            onClick={() => navigate('/login')}
-            className="bg-blue-700 hover:bg-blue-800 text-white py-1 px-4 rounded-md text-sm transition-colors"
-          >
-            ログイン
-          </button>
-        )}
+          )}
+        </div>
       </div>
     </header>
   );
