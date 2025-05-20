@@ -11,7 +11,12 @@ import ReservationInputScreen from './components/screens/ReservationInputScreen'
 import ReservationConfirmationScreen from './components/screens/ReservationConfirmationScreen';
 import ReservationCompleteScreen from './components/screens/ReservationCompleteScreen';
 import MyReservationsScreen from './components/screens/MyReservationsScreen';
+import AdminLoginScreen from './components/admin/AdminLoginScreen';
+import AdminDashboardScreen from './components/admin/AdminDashboardScreen';
+import AdminReservationsScreen from './components/admin/AdminReservationsScreen';
+import AdminUsersScreen from './components/admin/AdminUsersScreen';
 import AuthGuard from './components/screens/AuthGuard';
+import AdminAuthGuard from './components/admin/AdminAuthGuard';
 
 function App() {
   return (
@@ -78,6 +83,34 @@ function App() {
                 </AuthGuard>
               }
             />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLoginScreen />} />
+            <Route
+              path="/admin"
+              element={
+                <AdminAuthGuard>
+                  <AdminDashboardScreen />
+                </AdminAuthGuard>
+              }
+            />
+            <Route
+              path="/admin/reservations"
+              element={
+                <AdminAuthGuard>
+                  <AdminReservationsScreen />
+                </AdminAuthGuard>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <AdminAuthGuard>
+                  <AdminUsersScreen />
+                </AdminAuthGuard>
+              }
+            />
+            
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </Layout>

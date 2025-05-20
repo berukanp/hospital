@@ -21,6 +21,7 @@ export interface User {
   phoneNumber: string;
   email: string;
   isAuthenticated: boolean;
+  isAdmin?: boolean;
   insurance?: string;
   insuranceType?: 'self' | 'family';
   insuranceNumber?: string;
