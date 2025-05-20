@@ -19,9 +19,22 @@ const LoginScreen: React.FC = () => {
       return;
     }
 
-    // For demo purposes, any valid email/password combination works
+    // Check if this is an admin login
+    if (email === 'admin@example.com' && password === 'admin123') {
+      updateUser({
+        isAuthenticated: true,
+        isAdmin: true,
+        email: email,
+        fullName: '管理者'
+      });
+      navigate('/admin');
+      return;
+    }
+
+    // Regular user login
     updateUser({
       isAuthenticated: true,
+      isAdmin: false,
       email: email,
       fullName: '山田 太郎',
       phoneNumber: '09012345678'
@@ -78,6 +91,11 @@ const LoginScreen: React.FC = () => {
           <div>
             <Link to="/forgot-password" className="block text-sm text-blue-600 hover:text-blue-800">
               パスワードをお忘れですか？
+            </Link>
+          </div>
+          <div>
+            <Link to="/admin/login" className="block text-sm text-blue-600 hover:text-blue-800">
+              管理者ログインはこちら
             </Link>
           </div>
         </div>
