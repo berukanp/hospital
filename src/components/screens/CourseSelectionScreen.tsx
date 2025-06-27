@@ -17,10 +17,10 @@ const CourseSelectionScreen: React.FC = () => {
   }
   
   const courseOptions: CourseOption[] = [
-    "生活習慣病予防検診",
+    "生活習慣病予防健診",
     "定期健診",
     "法定定期健診",
-    "雇用時検診"
+    "雇用時健診"
   ];
   
   const handleSubmit = (e: React.FormEvent) => {
