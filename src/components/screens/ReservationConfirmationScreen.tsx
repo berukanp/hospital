@@ -18,7 +18,7 @@ const ReservationConfirmationScreen: React.FC = () => {
     userEmail: false
   });
   
-  if (!reservation.date || !reservation.time) {
+  if (!reservation.date || !reservation.time || !reservation.course) {
     navigate('/');
     return null;
   }
@@ -73,6 +73,10 @@ const ReservationConfirmationScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-1">
           <span className="text-gray-600">健診コース：</span>
           <span className="col-span-2 font-medium">{reservation.course}</span>
+        </div>
+        <div className="grid grid-cols-3 gap-1">
+          <span className="text-gray-600">会社名：</span>
+          <span className="col-span-2 font-medium">{reservation.company}</span>
         </div>
         <div className="grid grid-cols-3 gap-1">
           <span className="text-gray-600">オプション：</span>

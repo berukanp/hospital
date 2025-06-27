@@ -6,6 +6,7 @@ import LoginScreen from './components/screens/LoginScreen';
 import SignupScreen from './components/screens/SignupScreen';
 import ProfileScreen from './components/screens/ProfileScreen';
 import CalendarScreen from './components/screens/CalendarScreen';
+import CourseSelectionScreen from './components/screens/CourseSelectionScreen';
 import TimeSelectionScreen from './components/screens/TimeSelectionScreen';
 import ReservationInputScreen from './components/screens/ReservationInputScreen';
 import ReservationConfirmationScreen from './components/screens/ReservationConfirmationScreen';
@@ -40,6 +41,14 @@ function App() {
               element={
                 <AuthGuard>
                   <ProfileScreen />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/course-selection"
+              element={
+                <AuthGuard>
+                  <CourseSelectionScreen />
                 </AuthGuard>
               }
             />

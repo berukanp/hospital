@@ -9,7 +9,7 @@ const TimeSelectionScreen: React.FC = () => {
   const { reservation, updateReservation } = useReservation();
   const timeSlots = getTimeSlots();
   
-  if (!reservation.date) {
+  if (!reservation.date || !reservation.course) {
     navigate('/');
     return null;
   }
@@ -20,15 +20,18 @@ const TimeSelectionScreen: React.FC = () => {
   };
   
   const handleBack = () => {
-    navigate('/');
+    navigate('/course-selection');
   };
   
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-gray-800">
-        {formatDate(reservation.date)}
-      </h1>
-      <p className="text-gray-600">以下から希望の時間帯を選択してください</p>
+      <div>
+        <h1 className="text-xl font-bold text-gray-800">時間を選択してください</h1>
+        <div className="text-gray-600 mt-1 space-y-1">
+          <p>{formatDate(reservation.date)}</p>
+          <p className="text-sm">健診コース: {reservation.course}</p>
+        </div>
+      </div>
       
       <div className="space-y-4">
         <h2 className="text-lg font-medium text-gray-700">午前</h2>

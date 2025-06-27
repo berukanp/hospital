@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useReservation } from '../../context/ReservationContext';
 import { formatDate } from '../../utils/dateUtils';
-import { CourseOption } from '../../types';
 import Button from '../ui/Button';
 
 const ReservationInputScreen: React.FC = () => {
@@ -10,44 +9,33 @@ const ReservationInputScreen: React.FC = () => {
   const { reservation, updateReservation } = useReservation();
   
   const [company, setCompany] = useState(reservation.company || '');
-  const [course, setCourse] = useState<CourseOption | ''>(reservation.course as CourseOption || '');
   const [option, setOption] = useState(reservation.option || '');
   const [notes, setNotes] = useState(reservation.notes || '');
   
   const [errors, setErrors] = useState({
-    company: false,
-    course: false
+    company: false
   });
   
-  if (!reservation.date || !reservation.time) {
+  if (!reservation.date || !reservation.time || !reservation.course) {
     navigate('/');
     return null;
   }
-  
-  const courseOptions: CourseOption[] = [
-    "生活習慣病予防検診",
-    "定期健診",
-    "法定定期健診",
-    "雇用時検診"
-  ];
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     const newErrors = {
-      company: !company.trim(),
-      course: !course
+      company: !company.trim()
     };
     
     setErrors(newErrors);
     
-    if (newErrors.company || newErrors.course) {
+    if (newErrors.company) {
       return;
     }
     
     updateReservation({
       company,
-      course,
       option,
       notes
     });
@@ -63,9 +51,10 @@ const ReservationInputScreen: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-gray-800">予約情報入力</h1>
-        <p className="text-gray-600 mt-1">
-          {formatDate(reservation.date)} {reservation.time}
-        </p>
+        <div className="text-gray-600 mt-1 space-y-1">
+          <p>{formatDate(reservation.date)} {reservation.time}</p>
+          <p className="text-sm">健診コース: {reservation.course}</p>
+        </div>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -85,30 +74,6 @@ const ReservationInputScreen: React.FC = () => {
           />
           {errors.company && (
             <p className="text-red-500 text-sm mt-1">会社名は必須です</p>
-          )}
-        </div>
-        
-        <div>
-          <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
-            健診コース <span className="text-red-500">*</span>
-          </label>
-          <select
-            id="course"
-            value={course}
-            onChange={(e) => setCourse(e.target.value as CourseOption)}
-            className={`w-full p-2 border rounded-md ${
-              errors.course ? 'border-red-500' : 'border-gray-300'
-            }`}
-          >
-            <option value="">選択してください</option>
-            {courseOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.course && (
-            <p className="text-red-500 text-sm mt-1">健診コースは必須です</p>
           )}
         </div>
         

@@ -10,7 +10,7 @@ const CalendarScreen: React.FC = () => {
   
   const handleDateSelect = (date: Date) => {
     updateReservation({ date });
-    navigate('/time-selection');
+    navigate('/course-selection');
   };
   
   return (
