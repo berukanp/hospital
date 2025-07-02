@@ -20,7 +20,12 @@ const CourseSelectionScreen: React.FC = () => {
     "生活習慣病予防健診",
     "定期健診",
     "法定定期健診",
-    "雇用時健診"
+    "雇用時健診",
+    "簡易健診",
+    "特定健診",
+    "電離放射線健診",
+    "長時間勤務健診",
+    "その他"
   ];
   
   const handleSubmit = (e: React.FormEvent) => {
