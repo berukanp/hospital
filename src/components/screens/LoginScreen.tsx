@@ -93,11 +93,6 @@ const LoginScreen: React.FC = () => {
               パスワードをお忘れですか？
             </Link>
           </div>
-          <div>
-            <Link to="/admin/login" className="block text-sm text-blue-600 hover:text-blue-800">
-              管理者ログインはこちら
-            </Link>
-          </div>
         </div>
       </form>
     </div>
