@@ -216,7 +216,6 @@ const ProfileScreen: React.FC = () => {
             <option value="">選択してください</option>
             <option value="male">男性</option>
             <option value="female">女性</option>
-            <option value="other">その他</option>
           </select>
         </div>
 
