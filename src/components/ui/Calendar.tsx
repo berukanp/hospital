@@ -71,7 +71,6 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
           }
           
           const date = new Date(year, month, day);
-          const available = isDateAvailable(date);
           const isToday = new Date().toDateString() === date.toDateString();
           
           const dayStyles = [
@@ -79,17 +78,14 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
             date.getDay() === 0 ? 'text-red-500' : '',
             date.getDay() === 6 ? 'text-blue-500' : '',
             isToday ? 'ring-2 ring-blue-500' : '',
-            available 
-              ? 'cursor-pointer hover:bg-blue-100' 
-              : 'text-gray-300 cursor-not-allowed bg-gray-100'
+            'cursor-pointer hover:bg-blue-100'
           ].filter(Boolean).join(' ');
           
           return (
             <div key={`day-${day}`} className="text-center">
               <button
                 className={dayStyles}
-                onClick={() => available && handleDateClick(day)}
-                disabled={!available}
+                onClick={() => handleDateClick(day)}
               >
                 {day}
               </button>
