@@ -14,6 +14,7 @@ export interface Reservation {
   userName: string;
   userPhone: string;
   userEmail: string;
+  userAddress: string;
 }
 
 export interface User {
@@ -30,6 +31,7 @@ export interface User {
   birthDate?: string;
   languageLevel?: string;
   otherLanguages?: string;
+  address?: string;
 }
 
 export type CourseOption = 

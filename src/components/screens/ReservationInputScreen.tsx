@@ -9,7 +9,6 @@ const ReservationInputScreen: React.FC = () => {
   const { reservation, updateReservation } = useReservation();
   
   const [company, setCompany] = useState(reservation.company || '');
-  const [option, setOption] = useState(reservation.option || '');
   const [notes, setNotes] = useState(reservation.notes || '');
   
   const [errors, setErrors] = useState({
@@ -36,7 +35,6 @@ const ReservationInputScreen: React.FC = () => {
     
     updateReservation({
       company,
-      option,
       notes
     });
     
@@ -75,19 +73,6 @@ const ReservationInputScreen: React.FC = () => {
           {errors.company && (
             <p className="text-red-500 text-sm mt-1">会社名は必須です</p>
           )}
-        </div>
-        
-        <div>
-          <label htmlFor="option" className="block text-sm font-medium text-gray-700 mb-1">
-            オプション
-          </label>
-          <input
-            type="text"
-            id="option"
-            value={option}
-            onChange={(e) => setOption(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
         </div>
         
         <div>

@@ -6,16 +6,18 @@ import Button from '../ui/Button';
 
 const ReservationConfirmationScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { reservation, user, updateReservation, addReservation } = useReservation();
+  const { reservation, user, updateReservation, addReservation, updateUser } = useReservation();
   
   const [userName, setUserName] = useState(user.fullName);
   const [userPhone, setUserPhone] = useState(user.phoneNumber);
   const [userEmail, setUserEmail] = useState(user.email);
+  const [userAddress, setUserAddress] = useState(user.address || '');
   
   const [errors, setErrors] = useState({
     userName: false,
     userPhone: false,
-    userEmail: false
+    userEmail: false,
+    userAddress: false
   });
   
   if (!reservation.date || !reservation.time || !reservation.course) {
@@ -29,20 +31,34 @@ const ReservationConfirmationScreen: React.FC = () => {
     const newErrors = {
       userName: !userName.trim(),
       userPhone: !userPhone.trim(),
-      userEmail: !userEmail.trim()
+      userEmail: !userEmail.trim(),
+      userAddress: !userAddress.trim()
     };
     
     setErrors(newErrors);
     
-    if (newErrors.userName || newErrors.userPhone || newErrors.userEmail) {
+    if (newErrors.userName || newErrors.userPhone || newErrors.userEmail || newErrors.userAddress) {
       return;
+    }
+    
+    // Update user data if changed
+    if (userName !== user.fullName || userPhone !== user.phoneNumber || 
+        userEmail !== user.email || userAddress !== user.address) {
+      updateUser({
+        ...user,
+        fullName: userName,
+        phoneNumber: userPhone,
+        email: userEmail,
+        address: userAddress
+      });
     }
     
     const completeReservation = {
       ...reservation,
       userName,
       userPhone,
-      userEmail
+      userEmail,
+      userAddress
     };
     
     updateReservation(completeReservation);
@@ -77,10 +93,6 @@ const ReservationConfirmationScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-1">
           <span className="text-gray-600">会社名：</span>
           <span className="col-span-2 font-medium">{reservation.company}</span>
-        </div>
-        <div className="grid grid-cols-3 gap-1">
-          <span className="text-gray-600">オプション：</span>
-          <span className="col-span-2 font-medium">{reservation.option || '特になし'}</span>
         </div>
         <div className="grid grid-cols-3 gap-1">
           <span className="text-gray-600">備考：</span>
@@ -127,6 +139,25 @@ const ReservationConfirmationScreen: React.FC = () => {
             />
             {errors.userPhone && (
               <p className="text-red-500 text-sm mt-1">電話番号は必須です</p>
+            )}
+          </div>
+          
+          <div>
+            <label htmlFor="userAddress" className="block text-sm font-medium text-gray-700 mb-1">
+              住所 <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="userAddress"
+              value={userAddress}
+              onChange={(e) => setUserAddress(e.target.value)}
+              placeholder="例：東京都渋谷区代々木1-1-1"
+              className={`w-full p-2 border rounded-md ${
+                errors.userAddress ? 'border-red-500' : 'border-gray-300'
+              }`}
+            />
+            {errors.userAddress && (
+              <p className="text-red-500 text-sm mt-1">住所は必須です</p>
             )}
           </div>
           
