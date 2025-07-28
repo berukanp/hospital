@@ -58,11 +58,6 @@ const CourseSelectionScreen: React.FC = () => {
       name: "長時間勤務健診" as CourseOption,
       hasRequiredStoolTest: false,
       description: ""
-    },
-    {
-      name: "その他" as CourseOption,
-      hasRequiredStoolTest: false,
-      description: ""
     }
   ];
 
