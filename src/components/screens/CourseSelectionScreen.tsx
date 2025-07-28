@@ -233,6 +233,11 @@ const CourseSelectionScreen: React.FC = () => {
                       {isRequired && <span className="text-blue-600 ml-2">(必須)</span>}
                     </span>
                     {isDisabled && !isRequired && (
+                      <div className="text-red-500 text-xs ml-2">
+                        本日から14日以上先の日付を選択してください
+                      </div>
+                    )}
+                    {isDisabled && !isRequired && (
                       <div className="relative group">
                         <Info size={16} className="text-gray-400" />
                         <div className="absolute bottom-full right-0 mb-2 w-64 p-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
