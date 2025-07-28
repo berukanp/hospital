@@ -177,35 +177,40 @@ const CourseSelectionScreen: React.FC = () => {
           )}
         </div>
 
-        {selectedCourse && !courseOptions.find(c => c.name === selectedCourse)?.hasRequiredStoolTest && (
+        {selectedCourse && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               オプション検査
             </label>
             <div className="space-y-2">
               {optionalTests.map((option) => {
-                const isDisabled = option === "便潜血検査" && isStoolTestDisabled();
+                const selectedCourseData = courseOptions.find(c => c.name === selectedCourse);
+                const isStoolTest = option === "便潜血検査";
+                const isRequired = isStoolTest && selectedCourseData?.hasRequiredStoolTest;
+                const isDisabled = isStoolTest && !isRequired && isStoolTestDisabled();
+                const isChecked = isRequired || selectedOptions.includes(option);
                 
                 return (
                   <label
                     key={option}
                     className={`flex items-center p-3 border rounded-lg transition-colors ${
-                      isDisabled 
+                      isDisabled || isRequired
                         ? 'border-gray-200 bg-gray-50 cursor-not-allowed' 
                         : 'border-gray-300 hover:border-gray-400 cursor-pointer'
                     }`}
                   >
                     <input
                       type="checkbox"
-                      checked={selectedOptions.includes(option)}
-                      disabled={isDisabled}
+                      checked={isChecked}
+                      disabled={isDisabled || isRequired}
                       onChange={(e) => handleOptionChange(option, e.target.checked)}
                       className="mr-3 text-blue-600 disabled:opacity-50"
                     />
-                    <span className={`flex-1 ${isDisabled ? 'text-gray-400' : 'text-gray-800'}`}>
+                    <span className={`flex-1 ${isDisabled || isRequired ? 'text-gray-400' : 'text-gray-800'}`}>
                       {option}
+                      {isRequired && <span className="text-blue-600 ml-2">(必須)</span>}
                     </span>
-                    {isDisabled && (
+                    {isDisabled && !isRequired && (
                       <div className="relative group">
                         <Info size={16} className="text-gray-400" />
                         <div className="absolute bottom-full right-0 mb-2 w-64 p-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
