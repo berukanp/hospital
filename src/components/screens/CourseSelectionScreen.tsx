@@ -83,6 +83,10 @@ const CourseSelectionScreen: React.FC = () => {
     return diffDays < 14;
   };
 
+  const isCourseDisabled = (courseName: CourseOption) => {
+    return courseName === "生活習慣病予防健診" && isWithin14Days();
+  };
+
   const isStoolTestDisabled = () => {
     return isWithin14Days() && !courseOptions.find(c => c.name === selectedCourse)?.hasRequiredStoolTest;
   };
@@ -140,10 +144,16 @@ const CourseSelectionScreen: React.FC = () => {
             {courseOptions.map((courseData) => (
               <label
                 key={courseData.name}
-                className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                className={`flex items-center p-4 border rounded-lg transition-colors ${
+                  isCourseDisabled(courseData.name)
+                    ? 'border-gray-200 bg-gray-50 cursor-not-allowed'
+                    : 'cursor-pointer'
+                } ${
                   selectedCourse === courseData.name
                     ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-300 hover:border-gray-400'
+                    : isCourseDisabled(courseData.name)
+                      ? 'border-gray-200'
+                      : 'border-gray-300 hover:border-gray-400'
                 }`}
               >
                 <input
@@ -151,6 +161,7 @@ const CourseSelectionScreen: React.FC = () => {
                   name="course"
                   value={courseData.name}
                   checked={selectedCourse === courseData.name}
+                  disabled={isCourseDisabled(courseData.name)}
                   onChange={(e) => {
                     const newCourse = e.target.value as CourseOption;
                     setSelectedCourse(newCourse);
@@ -159,13 +170,24 @@ const CourseSelectionScreen: React.FC = () => {
                     // Reset options when course changes
                     setSelectedOptions([]);
                   }}
-                  className="mr-3 text-blue-600"
+                  className="mr-3 text-blue-600 disabled:opacity-50"
                 />
                 <div className="flex-1">
-                  <span className="text-gray-800 font-medium">{courseData.name}</span>
+                  <span className={`font-medium ${
+                    isCourseDisabled(courseData.name) ? 'text-gray-400' : 'text-gray-800'
+                  }`}>
+                    {courseData.name}
+                  </span>
                   {courseData.hasRequiredStoolTest && (
-                    <div className="text-sm text-blue-600 mt-1">
+                    <div className={`text-sm mt-1 ${
+                      isCourseDisabled(courseData.name) ? 'text-gray-400' : 'text-blue-600'
+                    }`}>
                       便潜血検査が必須です
+                      {isCourseDisabled(courseData.name) && (
+                        <div className="text-red-500 mt-1">
+                          本日から14日以上先の日付を選択してください
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
